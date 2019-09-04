@@ -2,13 +2,14 @@ const express = require("express")
 const passport = require('passport')
 const router = express.Router()
 const User = require("../models/User")
+const Event = require("../models/Event")
 
 // Bcrypt to encrypt passwords
 const bcrypt = require("bcrypt")
 const bcryptSalt = 10
 
 router.post("/signup", (req, res, next) => {
-  const { username, password, name } = req.body
+  const { username, password, name, city, numOfFTE, sATB, aBB  } = req.body
   if (!username || !password) {
     res.status(400).json({ message: "Indicate username and password" })
     return
@@ -21,7 +22,7 @@ router.post("/signup", (req, res, next) => {
       }
       const salt = bcrypt.genSaltSync(bcryptSalt)
       const hashPass = bcrypt.hashSync(password, salt)
-      const newUser = new User({ username, password: hashPass, name })
+      const newUser = new User({ username, password: hashPass, name, city, numOfFTE, sATB, aBB })
       return newUser.save()
     })
     .then(userSaved => {
@@ -36,6 +37,17 @@ router.post("/signup", (req, res, next) => {
     })
     .catch(err => next(err))
 })
+
+router.post("/addEvent", (req, res, next)=>{
+  const { eventName, siteLead, city, tse, actualSpend, quarter} = req.body
+  const newEvent = new Event({ eventName, siteLead, city, tse, actualSpend, quarter})
+  return newEvent.save()
+  .then(eventSaved => {
+    res.json( eventSaved );
+  })
+  .catch(err => next(err))
+
+  })
 
 router.post("/login", (req, res, next) => {
   const { username, password } = req.body

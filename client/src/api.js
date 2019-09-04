@@ -29,6 +29,7 @@ export default {
     return JSON.parse(localStorage.getItem('user'))
   },
 
+
   // This method signs up and logs in the user
   signup(userInfo) {
     return service
@@ -40,6 +41,24 @@ export default {
       })
       .catch(errHandler)
   },
+
+  addEvent(eventInfo) {
+    return service
+      .post('/addEvent', eventInfo)
+      .then(res => {
+        localStorage.setItem('event', JSON.stringify(res.data))
+        return res.data
+      })
+      .catch(errHandler)
+  },
+  
+  getEvents() {
+    return service
+    .get('/events')
+    .then(res => res.data)
+    .catch(errHandler)
+  },
+
 
   login(username, password) {
     return service
