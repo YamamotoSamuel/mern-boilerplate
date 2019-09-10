@@ -4,13 +4,13 @@ import { Route, Link, NavLink, Switch } from "react-router-dom";
 import api from '../../api';
 
 const events = [{
-  _id:this.props._id,
-  eventName:this.props.eventName,
-  siteLead:this.props.siteLead,
-  city:this.props.city,
-  tse:this.props.tse,
-  actualSpend:this.props.actualSpend,
-  quarter:this.props.quarter
+  _id:"",
+  eventName:"",
+  siteLead:"",
+  city:"",
+  tse:"",
+  actualSpend:"",
+  quarter:""
 }];
 
 const fakeRequest = () =>
